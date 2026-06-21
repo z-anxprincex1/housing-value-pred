@@ -6,7 +6,8 @@ Cali-Predict is a premium, interactive desktop application built with **Electron
 
 | Housing Value Predictor | Locality Finder & Suggestion Map |
 | :---: | :---: |
-| ![Housing Value Predictor](screenshots/predictor_screenshot.png) | ![Locality Finder & Suggestion Map](screenshots/locality_screenshot.png) |
+| ![Housing Value Predictor](screenshots/1.png) | ![Locality Finder & Suggestion Map](screenshots/2.png) |
+| **Predictor Mode:** Shows value calculations (estimating **$265,273** for a sample block of 1,200 people) alongside the interactive California map overlay displaying historical data points. | **Locality Finder Mode:** Suggests recommended coordinates **(37.8403, -122.1836)** in the East Bay area and predicts an estimated value of **$230,936** based on a desired median income. |
 
 ---
 
