@@ -1,0 +1,670 @@
+/* CSS Variables & Design System */
+:root {
+  --font-family: 'Outfit', sans-serif;
+  
+  /* Color Palette */
+  --color-bg-base: #07050f;
+  --color-bg-panel: rgba(15, 12, 28, 0.65);
+  --color-border-glass: rgba(255, 255, 255, 0.07);
+  --color-border-focus: rgba(168, 85, 247, 0.5);
+  
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #9ea0b0;
+  --color-text-muted: #67697a;
+  
+  --color-accent: #8b5cf6;
+  --color-accent-hover: #a78bfa;
+  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  --gradient-glow: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(168, 85, 247, 0.25) 100%);
+  
+  --shadow-glow: 0 0 25px rgba(168, 85, 247, 0.45);
+  --shadow-panel: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  
+  /* Transition Speeds */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset and Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* App Container Layout */
+.app-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+/* Glassmorphism Panels */
+.glass {
+  background: var(--color-bg-panel);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border-glass);
+  box-shadow: var(--shadow-panel);
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 420px;
+  min-width: 420px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  border-right: 1px solid var(--color-border-glass);
+}
+
+.app-header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid var(--color-border-glass);
+}
+
+.logo-icon {
+  background: var(--color-accent);
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: var(--shadow-glow);
+}
+
+.brand h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-text-primary);
+}
+
+.tagline {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+/* Tab Navigation */
+.tabs-container {
+  display: flex;
+  padding: 8px 16px;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--color-border-glass);
+}
+
+.tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 12px 8px;
+  font-family: var(--font-family);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: 8px;
+  position: relative;
+  transition: var(--transition-fast);
+}
+
+.tab-btn:hover {
+  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tab-btn.active {
+  color: var(--color-text-primary);
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+/* Main Form Area */
+.form-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Custom Scrollbar for Form */
+.form-container::-webkit-scrollbar {
+  width: 6px;
+}
+.form-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.form-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+.form-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.tab-header h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.subtext {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+/* Input Fields Styling */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.input-wrapper, .select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+input[type="number"], select {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--color-border-glass);
+  border-radius: 8px;
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  font-weight: 500;
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+input[type="number"]:focus, select:focus {
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.unit {
+  position: absolute;
+  right: 16px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.input-hint {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* Select Dropdown Styling */
+select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-wrapper::after {
+  content: '▼';
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  position: absolute;
+  right: 16px;
+  pointer-events: none;
+}
+
+/* Primary Button Styling */
+.btn-primary {
+  width: 100%;
+  padding: 14px 20px;
+  background: var(--color-accent);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+  opacity: 0.95;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  width: 100%;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-border-glass);
+  border-radius: 8px;
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-align: center;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Loading Spinner */
+.btn-loader {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Results Card styling */
+.results-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--color-border-glass);
+  margin-top: 8px;
+}
+
+.card-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(139, 92, 246, 0.08);
+  filter: blur(24px);
+  opacity: 0.5;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.card-content {
+  position: relative;
+  z-index: 2;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-content h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-accent-hover);
+}
+
+.result-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.locality-results {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.result-coord-row {
+  display: flex;
+  gap: 16px;
+}
+
+.coord-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.coord-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.coord-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* Animations helper classes */
+.hidden {
+  display: none !important;
+}
+
+.animate-fade {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Map Section Container */
+.map-container {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  background-color: #0b0c16;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Map Leaflet Dark Mode Adjustment (custom styling if needed) */
+.leaflet-container {
+  background: #0f101d !important;
+  font-family: var(--font-family) !important;
+}
+
+/* Glass Map Overlay Controls */
+.map-overlay {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000; /* Must be above leaflet */
+  padding: 16px;
+  border-radius: 12px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.overlay-section h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+
+.layer-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.layer-btn {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--color-border-glass);
+  color: var(--color-text-secondary);
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  font-family: var(--font-family);
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: var(--transition-fast);
+}
+
+.layer-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-primary);
+}
+
+.layer-btn.active {
+  background: rgba(139, 92, 246, 0.2);
+  border-color: var(--color-accent);
+  color: var(--color-text-primary);
+}
+
+/* Legend */
+.legend-header {
+  margin-bottom: 8px;
+}
+
+.legend-header h4 {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.legend-scale {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.color-dot.high {
+  background-color: #f59e0b; /* Yellow/Orange */
+  box-shadow: 0 0 8px #f59e0b;
+}
+
+.color-dot.mid {
+  background-color: #3b82f6; /* Blue */
+  box-shadow: 0 0 8px #3b82f6;
+}
+
+.color-dot.low {
+  background-color: #10b981; /* Green */
+  box-shadow: 0 0 8px #10b981;
+}
+
+/* Toggle Switch */
+.legend-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 12px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 18px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider-round {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: .3s;
+  border-radius: 18px;
+  border: 1px solid var(--color-border-glass);
+}
+
+.slider-round:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 2px;
+  bottom: 2px;
+  background-color: var(--color-text-secondary);
+  transition: .3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider-round {
+  background-color: rgba(139, 92, 246, 0.35);
+  border-color: var(--color-accent);
+}
+
+input:checked + .slider-round:before {
+  transform: translateX(14px);
+  background-color: #fff;
+}
+
+/* Custom Leaflet Map Popup and Marker Customization */
+.leaflet-popup-content-wrapper {
+  background: rgba(12, 10, 24, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--color-border-glass) !important;
+  border-radius: 12px !important;
+  color: var(--color-text-primary) !important;
+  box-shadow: var(--shadow-panel) !important;
+  padding: 8px !important;
+}
+
+.leaflet-popup-content {
+  margin: 8px 12px !important;
+  min-width: 180px;
+}
+
+.leaflet-popup-tip {
+  background: rgba(12, 10, 24, 0.85) !important;
+  border: 1px solid var(--color-border-glass);
+}
+
+.map-popup-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.map-popup-card.suggestion-popup {
+  border-left: 3px solid #c084fc;
+  padding-left: 8px;
+}
+
+/* Suggested Coordinate Custom Animated Pulse Marker */
+.suggested-div-icon {
+  background: transparent;
+  border: none;
+}
+
+.pulse-marker {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse-glow 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-glow {
+  0% {
+    transform: translate(-50%, -50%) scale(0.85);
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.8);
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.35);
+    box-shadow: 0 0 0 12px rgba(139, 92, 246, 0);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.85);
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+  }
+}
+

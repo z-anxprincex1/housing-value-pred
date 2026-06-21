@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>California Housing Value Predictor & Locality Finder</title>
+  
+  <!-- Premium Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  
+  <!-- App Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Left Sidebar for inputs and calculations -->
+    <aside class="sidebar glass">
+      <header class="app-header">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- House Silhouette -->
+            <path d="M3 10l9-7 9 7v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z" />
+            <polyline points="9 22 9 13 15 13 15 22" />
+            <!-- Upward Line Chart overlay (glowing green) -->
+            <path d="M6 15l4-3 5 2 5-5" stroke="#4ade80" stroke-width="2.5" />
+            <polyline points="17 9 20 9 20 12" stroke="#4ade80" stroke-width="2.5" />
+          </svg>
+        </div>
+        <div class="brand">
+          <h1>CALI-PREDICT</h1>
+          <p class="tagline">Housing Value Intelligence</p>
+        </div>
+      </header>
+
+      <!-- Navigation Tabs -->
+      <nav class="tabs-container">
+        <button id="tab-predictor" class="tab-btn active" role="tab" aria-selected="true">
+          <span>Predictor</span>
+        </button>
+        <button id="tab-locality" class="tab-btn" role="tab" aria-selected="false">
+          <span>Locality Finder</span>
+        </button>
+      </nav>
+
+      <!-- Form Container -->
+      <main class="form-container">
+        <form id="prediction-form" autocomplete="off">
+          
+          <!-- Tab Title -->
+          <div class="tab-header">
+            <h2 id="tab-title">Housing Value Predictor</h2>
+            <p id="tab-desc" class="subtext">Predict median house value based on block demographic features.</p>
+          </div>
+
+          <!-- Common inputs -->
+          <div class="input-group">
+            <label for="input-population">Population</label>
+            <div class="input-wrapper">
+              <input type="number" id="input-population" min="100" max="100000" value="1200" required>
+              <span class="unit">people</span>
+            </div>
+            <p class="input-hint">Target population size of the neighborhood block group.</p>
+          </div>
+
+          <div class="input-group">
+            <label for="input-avg-bed">Average Bedrooms per Household</label>
+            <div class="input-wrapper">
+              <input type="number" id="input-avg-bed" min="0.1" max="15.0" step="0.05" value="1.05" required>
+              <span class="unit">rooms</span>
+            </div>
+            <p class="input-hint">Ratio of total bedrooms to total households.</p>
+          </div>
+
+          <div class="input-group">
+            <label for="input-ocean">Ocean Proximity</label>
+            <div class="select-wrapper">
+              <select id="input-ocean" required>
+                <option value="0">NEAR BAY</option>
+                <option value="1">&lt;1H OCEAN</option>
+                <option value="2">INLAND</option>
+                <option value="3">NEAR OCEAN</option>
+                <option value="4">ISLAND</option>
+              </select>
+            </div>
+            <p class="input-hint">Geographic proximity category to the ocean.</p>
+          </div>
+
+          <div class="input-group">
+            <label for="input-age">Housing Median Age</label>
+            <div class="input-wrapper">
+              <input type="number" id="input-age" min="1" max="100" value="28" required>
+              <span class="unit">years</span>
+            </div>
+            <p class="input-hint">Median age of the houses in the block group.</p>
+          </div>
+
+          <!-- Tab-specific input: Median Income (only for Locality Finder) -->
+          <div id="group-income" class="input-group hidden animate-fade">
+            <label for="input-income">Median Income</label>
+            <div class="input-wrapper">
+              <input type="number" id="input-income" min="0.5" max="20.0" step="0.1" value="4.5">
+              <span class="unit">$10k</span>
+            </div>
+            <p class="input-hint">Median household income (e.g. 4.5 = $45,000).</p>
+          </div>
+
+          <!-- Action Button -->
+          <button type="submit" id="btn-submit" class="btn-primary">
+            <span class="btn-text">Run Prediction</span>
+            <div class="btn-loader hidden"></div>
+          </button>
+        </form>
+
+        <!-- Results Card -->
+        <div id="results-card" class="results-card hidden animate-fade">
+          <div class="card-glow"></div>
+          <div class="card-content">
+            <h3>Prediction Results</h3>
+            
+            <div class="result-metric">
+              <span class="metric-label">Predicted Median House Value</span>
+              <span id="result-value" class="metric-value">$0.00</span>
+            </div>
+
+            <!-- Tab 2 Locality results -->
+            <div id="locality-results" class="locality-results hidden">
+              <div class="result-coord-row">
+                <div class="coord-item">
+                  <span class="coord-label">Latitude</span>
+                  <span id="result-lat" class="coord-value">0.0000</span>
+                </div>
+                <div class="coord-item">
+                  <span class="coord-label">Longitude</span>
+                  <span id="result-lng" class="coord-value">0.0000</span>
+                </div>
+              </div>
+              <button id="btn-locate" class="btn-secondary">
+                Locate Suggested Neighborhood
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </aside>
+
+    <!-- Right Container for Leaflet Map -->
+    <section class="map-container">
+      <div id="map"></div>
+      
+      <!-- Map Controls / Legend Overlay -->
+      <div class="map-overlay glass">
+        <div class="overlay-section">
+          <h3>Map Options</h3>
+          <div class="layer-selector">
+            <button id="map-style-dark" class="layer-btn active">Dark Matter</button>
+            <button id="map-style-light" class="layer-btn">Voyager Light</button>
+            <button id="map-style-street" class="layer-btn">Standard</button>
+          </div>
+        </div>
+        <div class="overlay-section">
+          <div class="legend-header">
+            <h4>Demographic Dataset</h4>
+            <span class="subtext">Bubble Value Scale</span>
+          </div>
+          <div class="legend-scale">
+            <div class="legend-item"><span class="color-dot high"></span><span>High ($300k+)</span></div>
+            <div class="legend-item"><span class="color-dot mid"></span><span>Mid ($180k-$300k)</span></div>
+            <div class="legend-item"><span class="color-dot low"></span><span>Low (<$180k)</span></div>
+          </div>
+          <div class="legend-toggle">
+            <label class="switch">
+              <input type="checkbox" id="toggle-dataset" checked>
+              <span class="slider-round"></span>
+            </label>
+            <span>Show training dataset</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Leaflet Map JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- App Renderer JS -->
+  <script src="renderer.js"></script>
+</body>
+</html>
