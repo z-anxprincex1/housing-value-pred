@@ -2,6 +2,12 @@
 
 Cali-Predict is a premium, interactive desktop application built with **Electron** and **Python** that leverages pre-trained **Random Forest Regressor** models to predict California median housing values and recommend optimal geographic localities on a Leaflet map.
 
+## Application Screenshots
+
+| Housing Value Predictor | Locality Finder & Suggestion Map |
+| :---: | :---: |
+| ![Housing Value Predictor](screenshots/predictor_screenshot.png) | ![Locality Finder & Suggestion Map](screenshots/locality_screenshot.png) |
+
 ---
 
 ## Key Features
